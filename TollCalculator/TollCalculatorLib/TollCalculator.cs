@@ -43,7 +43,21 @@ namespace TollCalculatorLib
             return totalFee;
         }
 
-        private bool IsTollFreeVehicle(IVehicle vehicle)
+        public int GetTollFee(DateTime date, IVehicle vehicle)
+        {
+            if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
+            
+            var tollInterval = Constants.TollIntervals.Find(i => i.IsInInterval(date));
+
+            if(tollInterval != null)            
+                return tollInterval.Fee;
+
+
+            return 0;
+        }
+
+
+        private static bool IsTollFreeVehicle(IVehicle vehicle)
         {
             if (vehicle == null) return false;
             VehicleType vehicleType = vehicle.GetVehicleType();
@@ -51,26 +65,7 @@ namespace TollCalculatorLib
             return Enum.TryParse(vehicleType.ToString(), out TollFreeVehicles _);
         }
 
-        public int GetTollFee(DateTime date, IVehicle vehicle)
-        {
-            if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
-
-            int hour = date.Hour;
-            int minute = date.Minute;
-
-            if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-            else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-            else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-            else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-            else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-            else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-            else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-            else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-            else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-            else return 0;
-        }
-
-        private Boolean IsTollFreeDate(DateTime date)
+        private bool IsTollFreeDate(DateTime date)
         {
             int year = date.Year;
             int month = date.Month;
