@@ -33,5 +33,10 @@ namespace TollCalculatorLib.Extensions
             return (date.Month == 4 && date.Day == 30) || (date.Month == 5 && date.Day == 1);
         }
 
+        public static bool IsNationalDayOfSwedenOrTheDayBefore(this DateTime date)
+        {
+            return date.Month == 6 && (date.Day == 5 || date.Day == 6);
+        }
+
     }
 }

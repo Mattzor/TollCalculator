@@ -186,5 +186,21 @@ namespace TollCalculatorTests
                 }            
             }
         }
+
+        [TestMethod]
+        public void Test_GetTollFee_NoTollNationalDayOfSweden()
+        {
+            List<DateTime> dates = [new DateTime(2025, 6, 5, 0, 0, 0), new DateTime(2025, 6, 6, 0, 0, 0)];
+
+            foreach (var date in dates)
+            {
+                foreach (var interval in Constants.TollIntervals)
+                {
+                    var testDate = date.Add(interval.StartTime);
+                    var fee = _tollCalculator.GetTollFee(testDate, _car);
+                    Assert.AreEqual(0, fee);
+                }
+            }
+        }
     }
 }
