@@ -8,6 +8,17 @@ namespace TollCalculatorLib.Model
 {
     public interface IVehicle
     {   
-        string GetVehicleType();
+        VehicleType GetVehicleType();
+    }
+
+    public enum VehicleType
+    {
+        Car,
+        Motorbike,
+        Tractor,
+        Emergency,
+        Diplomat,
+        Foreign,
+        Military
     }
 }

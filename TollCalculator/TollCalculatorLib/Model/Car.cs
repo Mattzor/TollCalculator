@@ -8,9 +8,7 @@ namespace TollCalculatorLib.Model
 {
     public class Car : IVehicle
     {
-        public String GetVehicleType()
-        {
-            return "Car";
-        }
+        public VehicleType GetVehicleType() => VehicleType.Car;
+
     }
 }

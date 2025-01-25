@@ -46,13 +46,9 @@ namespace TollCalculatorLib
         private bool IsTollFreeVehicle(IVehicle vehicle)
         {
             if (vehicle == null) return false;
-            String vehicleType = vehicle.GetVehicleType();
-            return vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
-                   vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
-                   vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
-                   vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
-                   vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-                   vehicleType.Equals(TollFreeVehicles.Military.ToString());
+            VehicleType vehicleType = vehicle.GetVehicleType();
+
+            return Enum.TryParse(vehicleType.ToString(), out TollFreeVehicles _);
         }
 
         public int GetTollFee(DateTime date, IVehicle vehicle)
