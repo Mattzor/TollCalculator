@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using TollCalculatorLib.Extensions;
 using TollCalculatorLib.Model;
 
 namespace TollCalculatorLib
@@ -71,7 +72,9 @@ namespace TollCalculatorLib
             int month = date.Month;
             int day = date.Day;
 
-            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
+            if (date.IsWeekend() || date.IsJuly()) return true;
+
+            
 
             if (year == 2013)
             {

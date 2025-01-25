@@ -38,20 +38,27 @@ namespace TollCalculatorTests
         private readonly Car _car;
         private readonly Motorbike _motorbike;
 
+        private TollCalculator _tollCalculator;
+
         public TollCalculatorLibTests()
         {
             _car = new Car();
             _motorbike = new Motorbike();
         }
 
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _tollCalculator = new TollCalculator();
+        }
+
 
         [TestMethod]
         public void Test_GetTollFee_Array_SinglePassageAtDifferentTimes_WithCar_OnWeekDay()
-        {
-            TollCalculator tollCalculator = new TollCalculator();
+        {            
             foreach (var tollFee in tollFeeWeekDay)
             {
-                var fee = tollCalculator.GetTollFee(_car, [tollFee.Key]);
+                var fee = _tollCalculator.GetTollFee(_car, [tollFee.Key]);
                 Assert.AreEqual(tollFee.Value, fee);
             }
         }
@@ -59,10 +66,9 @@ namespace TollCalculatorTests
         [TestMethod]
         public void Test_GetTollFee_SingleDateTime_SinglePassageAtDifferentTimes_WithCar_OnWeekDay()
         {
-            TollCalculator tollCalculator = new TollCalculator();
             foreach (var tollFee in tollFeeWeekDay)
             {
-                var fee = tollCalculator.GetTollFee(tollFee.Key, _car);
+                var fee = _tollCalculator.GetTollFee(tollFee.Key, _car);
                 Assert.AreEqual(tollFee.Value, fee);
             }
         }
@@ -71,21 +77,19 @@ namespace TollCalculatorTests
         [TestMethod]
         public void Test_GetTollFee_Array_SinglePassageAtDifferentTimes_WithCar_OnWeekendDay()
         {
-            TollCalculator tollCalculator = new TollCalculator();
             foreach (var tollFee in tollFeeWeekendDay)
             {
-                var fee = tollCalculator.GetTollFee(_car, [tollFee.Key]);
+                var fee = _tollCalculator.GetTollFee(_car, [tollFee.Key]);
                 Assert.AreEqual(tollFee.Value, fee);
             }
         }
 
         [TestMethod]
         public void Test_GetTollFee_SingleDateTime_SinglePassageAtDifferentTimes_WithCar_OnWeekendDay()
-        {
-            TollCalculator tollCalculator = new TollCalculator();
+        {            
             foreach (var tollFee in tollFeeWeekendDay)
             {
-                var fee = tollCalculator.GetTollFee(tollFee.Key, _car);
+                var fee = _tollCalculator.GetTollFee(tollFee.Key, _car);
                 Assert.AreEqual(tollFee.Value, fee);
             }
         }
@@ -96,11 +100,10 @@ namespace TollCalculatorTests
         [TestMethod]
         public void Test_GetTollFee_Array_SinglePassageAtDifferentTimes_WithMotorbike_OnWeekDay()
         {
-            TollCalculator tollCalculator = new TollCalculator();
             var expectedFee = 0;
             foreach (var tollFee in tollFeeWeekDay)
             {
-                var fee = tollCalculator.GetTollFee(_motorbike, [tollFee.Key]);
+                var fee = _tollCalculator.GetTollFee(_motorbike, [tollFee.Key]);
                 Assert.AreEqual(expectedFee, fee);
             }
         }
@@ -108,11 +111,10 @@ namespace TollCalculatorTests
         [TestMethod]
         public void Test_GetTollFee_SingleDateTime_SinglePassageAtDifferentTimes_WithMotorbike_OnWeekDay()
         {
-            TollCalculator tollCalculator = new TollCalculator();
             var expectedFee = 0;
             foreach (var tollFee in tollFeeWeekDay)
             {
-                var fee = tollCalculator.GetTollFee(tollFee.Key, _motorbike);
+                var fee = _tollCalculator.GetTollFee(tollFee.Key, _motorbike);
                 Assert.AreEqual(expectedFee, fee);
             }
         }
@@ -121,11 +123,10 @@ namespace TollCalculatorTests
         [TestMethod]
         public void Test_GetTollFee_Array_SinglePassageAtDifferentTimes_WithMotorbike_OnWeekendDay()
         {
-            TollCalculator tollCalculator = new TollCalculator();
             var expectedFee = 0;
             foreach (var tollFee in tollFeeWeekendDay)
             {
-                var fee = tollCalculator.GetTollFee(_motorbike, [tollFee.Key]);
+                var fee = _tollCalculator.GetTollFee(_motorbike, [tollFee.Key]);
                 Assert.AreEqual(expectedFee, fee);
             }
         }
@@ -133,14 +134,26 @@ namespace TollCalculatorTests
         [TestMethod]
         public void Test_GetTollFee_SingleDateTime_SinglePassageAtDifferentTimes_WithMotorbike_OnWeekendDay()
         {
-            TollCalculator tollCalculator = new TollCalculator();
             var expectedFee = 0;
             foreach (var tollFee in tollFeeWeekendDay)
             {
-                var fee = tollCalculator.GetTollFee(tollFee.Key, _motorbike);
+                var fee = _tollCalculator.GetTollFee(tollFee.Key, _motorbike);
                 Assert.AreEqual(expectedFee, fee);
             }
         }
 
+        [TestMethod]
+        public void Test_GetTollFee_NoTollInJuly()
+        {
+            for(int i = 1; i < 31; i++){
+                var date = new DateTime(2025, 7, i, 0, 0, 0);
+                foreach(var interval in Constants.TollIntervals)
+                {
+                    var testDate = date.Add(interval.StartTime);
+                    var fee = _tollCalculator.GetTollFee(testDate, _car);
+                    Assert.AreEqual(0, fee);
+                }                
+            };
+        }
     }
 }
