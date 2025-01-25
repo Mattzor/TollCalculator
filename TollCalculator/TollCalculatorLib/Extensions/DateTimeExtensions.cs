@@ -8,6 +8,11 @@ namespace TollCalculatorLib.Extensions
 {
     public static class DateTimeExtensions
     {
+        public static bool IsPublicHoliday(this DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool IsWeekend(this DateTime date)
         {
             return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
@@ -23,9 +28,9 @@ namespace TollCalculatorLib.Extensions
             return date.Month == 12 && date.Day >= 24 && date.Day <= 26;
         }
 
-        public static bool IsPublicHoliday(this DateTime date)
+        public static bool IsFirstOfMayOrLastOfApril(this DateTime date)
         {
-            throw new NotImplementedException();
+            return (date.Month == 4 && date.Day == 30) || (date.Month == 5 && date.Day == 1);
         }
 
     }

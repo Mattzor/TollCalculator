@@ -170,5 +170,21 @@ namespace TollCalculatorTests
                 }
             };
         }
+
+        [TestMethod]
+        public void Test_GetTollFee_NoTollFirstOfMayOrLastOfApril()
+        {
+            List<DateTime> dates = [new DateTime(2025, 4, 30, 0, 0, 0), new DateTime(2025, 5, 1, 0, 0, 0)];
+            
+            foreach (var date in dates)
+            {
+                foreach (var interval in Constants.TollIntervals)
+                {
+                    var testDate = date.Add(interval.StartTime);
+                    var fee = _tollCalculator.GetTollFee(testDate, _car);
+                    Assert.AreEqual(0, fee);
+                }            
+            }
+        }
     }
 }

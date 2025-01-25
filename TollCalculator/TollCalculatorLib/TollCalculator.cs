@@ -72,7 +72,7 @@ namespace TollCalculatorLib
             int month = date.Month;
             int day = date.Day;
 
-            if (date.IsWeekend() || date.IsJuly() || date.IsChristmas()) return true;
+            if (date.IsWeekend() || date.IsJuly() || date.IsChristmas() || date.IsFirstOfMayOrLastOfApril()) return true;
 
 
 
