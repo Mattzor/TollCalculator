@@ -8,9 +8,10 @@ namespace TollCalculatorLib.Extensions
 {
     public static class DateTimeExtensions
     {
-        public static bool IsPublicHoliday(this DateTime date)
+        public static bool IsPublicHolidayOrDayBefore(this DateTime date)
         {
-            throw new NotImplementedException();
+            //Todo: Add methods for easter, midsummer, christ's ascension, all saints
+            return date.IsWeekend() || date.IsJuly() || date.IsChristmas() || date.IsFirstOfMayOrLastOfApril() || date.IsNationalDayOfSwedenOrTheDayBefore();
         }
 
         public static bool IsWeekend(this DateTime date)
