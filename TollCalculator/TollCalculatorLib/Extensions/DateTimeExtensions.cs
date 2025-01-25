@@ -18,6 +18,11 @@ namespace TollCalculatorLib.Extensions
             return date.Month == 7;
         }
 
+        public static bool IsChristmas(this DateTime date)
+        {
+            return date.Month == 12 && date.Day >= 24 && date.Day <= 26;
+        }
+
         public static bool IsPublicHoliday(this DateTime date)
         {
             throw new NotImplementedException();

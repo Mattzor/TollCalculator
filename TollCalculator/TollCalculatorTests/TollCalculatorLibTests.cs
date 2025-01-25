@@ -155,5 +155,20 @@ namespace TollCalculatorTests
                 }                
             };
         }
+
+        [TestMethod]
+        public void Test_GetTollFee_NoTollDuringChristmas()
+        {
+            for (int i = 24; i < 26; i++)
+            {
+                var date = new DateTime(2025, 12, i, 0, 0, 0);
+                foreach (var interval in Constants.TollIntervals)
+                {
+                    var testDate = date.Add(interval.StartTime);
+                    var fee = _tollCalculator.GetTollFee(testDate, _car);
+                    Assert.AreEqual(0, fee);
+                }
+            };
+        }
     }
 }
